@@ -1,0 +1,151 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "My Favorite Song";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+
+    <style>
+        /* ====== Background & Page Layout ====== */
+        body {
+            font-family: 'Comic Neue', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffe1f0 0%, #ffd1dc 25%, #ffc0cb 50%, #ffb6c1 75%, #fff0f5 100%);
+            color: #5b1e3d;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Floating sparkles background animation */
+        .sparkle {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+            animation: sparkleFall linear infinite;
+            z-index: 0;
+        }
+
+        @@keyframes sparkleFall {
+            from { transform: translateY(-10vh) scale(1); opacity: 1; }
+            to { transform: translateY(110vh) scale(0.8); opacity: 0; }
+        }
+
+        header {
+            z-index: 1;
+            margin-top: -40px;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            font-weight: 800;
+            color: #ff4fa3;
+            text-shadow:
+                0 0 8px #ff9ac9,
+                0 0 15px #ff66b3,
+                0 0 25px #ff1493;
+            animation: heartPulse 2s ease-in-out infinite;
+        }
+
+        @@keyframes heartPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        p {
+            font-size: 1.3em;
+            opacity: 0.8;
+            color: #a34d79;
+        }
+
+        /* YouTube Video Styling */
+        .video-container {
+            position: relative;
+            width: 85%;
+            max-width: 750px;
+            margin: 40px auto;
+            padding-bottom: 45%;
+            height: 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(255, 182, 193, 0.6);
+            z-index: 1;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Responsive Text */
+       @@media (max-width: 600px) {
+            h1 { font-size: 2.2em; }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1 id="animatedTitle">My Favorite Song 💕</h1>
+        <p>Let your heart dance with the rhythm 🎶</p>
+    </div>
+
+    <div class="video-container">
+        <!-- Replace the YouTube link with your favorite song -->
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/DeumyOzKqgI?si=lQRodNZpMvymXp7K" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
+    <script>
+        /* ====== Animated Title Color Loop ====== */
+        const title = document.getElementById('animatedTitle');
+        let hue = 300;
+
+        function animateTitle() {
+            hue = (hue + 0.8) % 360;
+            const color = `hsl(${hue}, 90%, 65%)`;
+            title.style.color = color;
+            title.style.textShadow = `
+                0 0 8px ${color},
+                0 0 15px ${color},
+                0 0 25px ${color},
+                0 0 35px ${color}
+            `;
+            requestAnimationFrame(animateTitle);
+        }
+        animateTitle();
+
+        /* ====== Sparkle Generator ====== */
+        function createSparkles() {
+            for (let i = 0; i < 25; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                sparkle.style.left = Math.random() * 100 + 'vw';
+                sparkle.style.animationDuration = 4 + Math.random() * 6 + 's';
+                sparkle.style.animationDelay = Math.random() * 4 + 's';
+                sparkle.style.background = `hsl(${Math.random() * 360}, 100%, 90%)`;
+                sparkle.style.width = sparkle.style.height = Math.random() * 5 + 3 + 'px';
+                document.body.appendChild(sparkle);
+            }
+        }
+        createSparkles();
+    </script>
+</body>
+</html>
